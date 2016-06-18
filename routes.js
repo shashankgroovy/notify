@@ -23,8 +23,8 @@ router.route("/notifications")
         var newNotification = req.body;
         newNotification.createDate = new Date();
 
-        if (!(req.body.user && req.body.reaction)) {
-            handleError(res, "Invalid input", "Must provide a user and notification", 400);
+        if (!(req.body.user && req.body.action)) {
+            handleError(res, "Invalid input", "Must provide a user and action", 400);
         }
 
         req.db.collection(notification_list).insertOne(newNotification, function(err, doc) {
@@ -58,18 +58,18 @@ router.route("/notifications/:id")
 
         req.db.collection(notification_list).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
             if (err) {
-            handleError(res, err.message, "Failed to update notification");
+                handleError(res, err.message, "Failed to update notification");
             } else {
-            res.status(204).end();
+                res.status(204).end();
             }
         });
     })
     .delete(function(req, res) {
         req.db.collection(notification_list).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
             if (err) {
-            handleError(res, err.message, "Failed to delete notification");
+                handleError(res, err.message, "Failed to delete notification");
             } else {
-            res.status(204).end();
+                res.status(204).end();
             }
         });
     });
