@@ -1,0 +1,73 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    background: url('/assets/images/exploration.jpg') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-color: #15191A;
+}
+a {
+    text-decoration: none;
+}
+
+header {
+    background-color: #ffffff;
+    font-size: 22px;
+}
+#site-nav {
+    min-width: 980px;
+    width: 980px;
+    margin: auto;
+}
+#site-nav .nav-item {
+    display: inline-block;
+    padding: 20px;
+}
+#site-nav .nav-item a {
+    color: #a9b9c2;
+}
+
+#site-nav .profile {
+    display: inline-block;
+    background-color: #9FB6C3;
+    color: #ffffff;
+    padding: 5px 0;
+}
+#site-nav .profile a {
+    color: white;
+}
+#site-nav .profile a img {
+    height: 32px;
+    width: 32px;
+    border-radius: 20px;
+}
+
+#search {
+    position: relative;
+    font-size: 18px;
+    padding-top: 40px;
+    margin: -20px auto 0;
+}
+
+#search label {
+    position: absolute;
+    left: 30px;
+    top: 23px;
+    color: #b0c3ce;
+}
+
+#search #search-input,
+#search #search-input:focus {
+    width: 400px;
+    background-color: #E3EBEF;
+    font-size: 18px;
+    line-height: 1.3333333;
+    padding: 5px 43px;
+    border-radius: 23px;
+    border: none;
+    outline: none;
+    color: #333;
+}

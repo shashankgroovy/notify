@@ -35,7 +35,7 @@ mongodb.MongoClient.connect(MONGODB_URI, function (err, database) {
   console.log("Database connected");
 
   // Initialize the app.
-  var server = app.listen(process.env.PORT || 8080, function () {
+  var server = app.listen(process.env.PORT || 8000, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
   });
@@ -55,14 +55,6 @@ app.use(function(req,res,next){
 var api = require('./routes');
 app.use('/api/v1/', api);
 
-app.get('/',function(req, res) {
-    var baseUrl = (req.headers.protocol || "http")+ "://" + req.headers.host;
-    var apiUrl = baseUrl + "/api/v1/"
-    msg = {
-        "links": {
-            "api": apiUrl,
-            "website": baseUrl
-        }
-    }
-    res.status(200).json(msg)
-})
+app.get('*', function(req, res) {
+  res.sendFile(__dirname + '/public/index.html');
+});
