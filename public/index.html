@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Takerest</title>
+    <title>Notify</title>
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="Dribbble inspired notification menu powered by a RESTful api backend"/>
@@ -10,17 +10,18 @@
     <!--<script src="/assets/js/jquery.js"></script>-->
 
     <link rel="stylesheet" href="/assets/css/styles.css" />
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <!--<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>-->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
     <script src="/assets/js/script.js"></script>
 
 </head>
 <body>
-    <header>
+    <header class="site-header">
         <nav id="site-nav">
 
             <div class="nav-item">
-                <a href="#">Take Rest</a>
+                <a href="#" title="Home">Notify</a>
             </div>
 
             <div id="search" class="nav-item">
@@ -31,25 +32,86 @@
             </div>
 
             <div class="nav-item">
-                <a href="#"><i class="fa fa-bell-o" aria-hidden="true"></i></a>
+                <div id="noti-box" onclick="toggleNotifications()">
+                    <a href="#" title="Notifications">
+                        <i class="fa fa-bell-o" aria-hidden="true"></i>
+                        <span id="noti-counter">4</span>
+                    </a>
+                    <div id="noti-container">
+                        <div class="arrow-up"></div>
+                        <header>
+                            <div id="noti-label-holder">
+                                <div id="noti-container-label">Notifications</div>
+                                <div id="noti-big-counter">4</div>
+                            </div>
+                        </header>
+                        <div id="noti-list">
+                            <ul>
+                                <li>
+                                    <fig>
+                                        <img src="/assets/images/muse.jpg">
+                                    </fig>
+                                    <div class="content">
+                                        <p>
+                                            <span class="username">Muse</span>
+                                            <span class="action">posted a photo on your wall</span>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <fig>
+                                        <img src="/assets/images/radiohead.png" alt="" />
+                                    </fig>
+                                    <div class="content">
+                                        <p>
+                                            <span class="username">Radiohead</span>
+                                            <span class="action">commented on your last video</span>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <fig>
+                                        <img src="/assets/images/arcticmonkeys.jpg" alt="" />
+                                    </fig>
+                                    <div class="content">
+                                        <p>
+                                            <span class="username">Arctic Monkeys</span>
+                                            <span class="action">posted 2 comments on your post</span>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <fig>
+                                        <img src="/assets/images/porcupinetree.jpg" alt="" />
+                                    </fig>
+                                    <div class="content">
+                                        <p>
+                                            <span class="username">Porcupine Tree</span>
+                                            <span class="action">liked your post</span>
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="nav-item">
-                <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
+                <a href="#" title="Messages"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
             </div>
 
-            <div class="profile">
-                <div class="nav-item">
-                    <a href="#">
-                        <img src="/assets/images/chris.jpg" alt="Profile Picture" />
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="#"><i class="fa fa-chevron-circle-down" aria-hidden="true"></i></a>
-                </div>
+            <div class="profile-item nav-item">
+                <a href="#" title="Profile photo">
+                    <img src="/assets/images/beatles.jpg" alt="Profile Picture" />
+                </a>
+            </div>
+            <div class="profile-item nav-item">
+                <a href="#" title="More"><i class="fa fa-chevron-circle-down" aria-hidden="true"></i></a>
             </div>
         </nav>
     </header>
     <article>
     </article>
+
 </body>
 </html>
