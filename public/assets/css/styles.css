@@ -122,10 +122,6 @@ header.site-header {
     left: -128px;
     width: 280px;
     display: none;
-    -webkit-transition: all 1s linear;
-    -moz-transition: all 1s linear;
-    -o-transition: all 1s linear;
-    transition: all 1s linear;
 }
 #noti-container header {
     background-color: #ffffff;

@@ -7,13 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="Dribbble inspired notification menu powered by a RESTful api backend"/>
 
-    <!--<script src="/assets/js/jquery.js"></script>-->
+    <link rel="icon" href="/assets/images/favicon-32.png" sizes="32x32" type="image/png">
 
     <link rel="stylesheet" href="/assets/css/styles.css" />
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-    <!--<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>-->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-    <script src="/assets/js/script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 
 </head>
 <body>
@@ -32,12 +31,12 @@
             </div>
 
             <div class="nav-item">
-                <div id="noti-box" onclick="toggleNotifications()">
+                <div id="noti-box">
                     <a href="#" title="Notifications">
                         <i class="fa fa-bell-o" aria-hidden="true"></i>
                         <span id="noti-counter">4</span>
                     </a>
-                    <div id="noti-container">
+                    <div id="noti-container" class="hidden opacity">
                         <div class="arrow-up"></div>
                         <header>
                             <div id="noti-label-holder">
@@ -113,5 +112,6 @@
     <article>
     </article>
 
+    <script src="/assets/js/script.js"></script>
 </body>
 </html>
