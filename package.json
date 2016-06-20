@@ -1,14 +1,16 @@
 {
-  "name": "takerest",
+  "name": "notify",
   "version": "1.0.0",
   "description": "A dribbble inspired notification menu with a RESTful API server in node.js",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "NODE_ENV=production node server.js",
+    "dev": "NODE_ENV=development nodemon server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shashankgroovy/takerest.git"
+    "url": "git+https://github.com/shashankgroovy/notify.git"
   },
   "keywords": [
     "RESTful",
@@ -20,9 +22,9 @@
   "author": "shashank srivastav",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/shashankgroovy/takerest/issues"
+    "url": "https://github.com/shashankgroovy/notify/issues"
   },
-  "homepage": "https://github.com/shashankgroovy/takerest#readme",
+  "homepage": "https://github.com/shashankgroovy/notify#readme",
   "dependencies": {
     "body-parser": "^1.15.1",
     "express": "^4.14.0",

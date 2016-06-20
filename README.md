@@ -1,2 +1,2 @@
-# takerest
-A RESTful api in MEAN
+# notify
+  A dribbble inspired notification menu with a RESTful API server in node.js

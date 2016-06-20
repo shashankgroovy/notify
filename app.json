@@ -1,7 +1,7 @@
 {
-  "name": "takerest",
+  "name": "notify",
   "description": "A dribbble inspired notification menu with a RESTful API server in node.js",
-  "repository": "https://github.com/shashankgroovy/takerest.git",
+  "repository": "https://github.com/shashankgroovy/notify.git",
   "logo": "",
   "keywords": ["node", "express", "angular", "MEAN", "mongodb", "REST", "API"],
   "addons": ["mongolab"]
