@@ -56,13 +56,16 @@ router.route("/notifications/:id")
         var updateDoc = req.body;
         delete updateDoc._id;
 
-        req.db.collection(notification_list).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
-            if (err) {
-                handleError(res, err.message, "Failed to update notification");
-            } else {
-                res.status(204).end();
-            }
-        });
+        req.db.collection(notification_list).updateOne(
+            {_id: new ObjectID(req.params.id)},
+            updateDoc,
+            function(err, doc) {
+                if (err) {
+                    handleError(res, err.message, "Failed to update notification");
+                } else {
+                    res.status(204).end();
+                }
+            });
     })
     .delete(function(req, res) {
         req.db.collection(notification_list).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
@@ -73,6 +76,64 @@ router.route("/notifications/:id")
             }
         });
     });
+
+
+// More routes that effect the CRUD
+
+/*  "/createnoti/"
+ *    GET: returns a new random notification
+ */
+
+router.route("/createnoti")
+    .get(function(req, res) {
+        req.db.collection(notification_list)
+            .find( { read_status: "0" })
+            .toArray(function(err, docs) {
+                if (err) {
+                    handleError(res, err.message, "Failed to get notifications.");
+                } else {
+                    res.status(200).json(docs);
+                }
+        })
+    });
+
+/*  "/getunread/"
+ *    GET: returns a list of all the unread notifications
+ */
+
+router.route("/getunread")
+    .get(function(req, res) {
+        req.db.collection(notification_list)
+            .find( { read_status: "0" })
+            .toArray(function(err, docs) {
+                if (err) {
+                    handleError(res, err.message, "Failed to get notifications.");
+                } else {
+                    res.status(200).json(docs);
+                }
+        })
+    });
+
+/*  "/markAllRead/"
+ *    PUT: marks all unread notification as read
+ */
+
+router.route("/markallread")
+    .put(function(req, res) {
+        req.db.collection(notification_list)
+            .update(
+                { read_status: "0" },
+                { $set: { read_status: "1"} },
+                { multi: true },
+                function(err, docs) {
+                    if (err) {
+                        handleError(res, err.message, "Failed to get notifications.");
+                    } else {
+                        res.status(200).json(docs);
+                    }
+                })
+    });
+
 
 
 // Generic error handler used by all endpoints.
