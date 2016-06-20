@@ -21,8 +21,10 @@ app.use(bodyParser.json());
 
 MONGODB_URI = 'mongodb://localhost:27017/test';
 
-// Create a database variable
-var db;
+// Create a database variable and collection name
+db = null;
+notification_collection = "notifications";
+
 //mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
 mongodb.MongoClient.connect(MONGODB_URI, function (err, database) {
   if (err) {

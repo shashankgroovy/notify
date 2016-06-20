@@ -1,7 +1,7 @@
+var controller = require("./controller");
 var express = require("express");
 var router = express.Router();
 
-var notification_list = "notifications";
 
 /*  "/notifications/"
  *    GET: show all notification
@@ -10,7 +10,7 @@ var notification_list = "notifications";
 
 router.route("/notifications")
     .get(function(req, res) {
-        req.db.collection(notification_list).find({}).toArray(function(err, docs) {
+        controller.getAllNotifications(function(err, docs) {
             if (err) {
                 handleError(res, err.message, "Failed to get notifications.");
             } else {
@@ -27,7 +27,7 @@ router.route("/notifications")
             handleError(res, "Invalid input", "Must provide a user and action", 400);
         }
 
-        req.db.collection(notification_list).insertOne(newNotification, function(err, doc) {
+        db.collection(notification_collection).insertOne(newNotification, function(err, doc) {
             if (err) {
                 handleError(res, err.message, "Failed to create new notification.");
             } else {
@@ -40,15 +40,20 @@ router.route("/notifications")
  *    GET: find notification by id
  *    PUT: update notification by id
  *    DELETE: deletes notification by id
+ *
+ *    TODO: Do all operations via the controller but since we are dealing with
+ *    just one notification so maybe its a fair trade.
+ *    Else retweak the controller functions to accept request objects parameters
  */
 
 router.route("/notifications/:id")
     .get(function(req, res) {
-        req.db.collection(notification_list).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+        db.collection(notification_collection)
+        .findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
             if (err) {
-            handleError(res, err.message, "Failed to get notification");
+                handleError(res, err.message, "Failed to get notification");
             } else {
-            res.status(200).json(doc);
+                res.status(200).json(doc);
             }
         });
     })
@@ -56,10 +61,8 @@ router.route("/notifications/:id")
         var updateDoc = req.body;
         delete updateDoc._id;
 
-        req.db.collection(notification_list).updateOne(
-            {_id: new ObjectID(req.params.id)},
-            updateDoc,
-            function(err, doc) {
+        db.collection(notification_collection)
+            .updateOne( {_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
                 if (err) {
                     handleError(res, err.message, "Failed to update notification");
                 } else {
@@ -68,7 +71,8 @@ router.route("/notifications/:id")
             });
     })
     .delete(function(req, res) {
-        req.db.collection(notification_list).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+        db.collection(notification_collection)
+        .deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
             if (err) {
                 handleError(res, err.message, "Failed to delete notification");
             } else {
@@ -78,41 +82,23 @@ router.route("/notifications/:id")
     });
 
 
-// More routes that effect the CRUD
+// Routes that don't follow the exact rest pattern but uses rest
 
-/*  "/createnoti/"
- *    GET: returns a new random notification
+/*  "/createnotifications/"
+ *    GET: returns a random number of newly created notifications
  */
 
-router.route("/createnoti")
+router.route("/createnotifications")
     .get(function(req, res) {
-        req.db.collection(notification_list)
-            .find( { read_status: "0" })
-            .toArray(function(err, docs) {
-                if (err) {
-                    handleError(res, err.message, "Failed to get notifications.");
-                } else {
-                    res.status(200).json(docs);
-                }
+        controller.generateNotifications(function(err, docs) {
+            if (err) {
+                handleError(res, err.message, "Failed to create notifications.");
+            } else {
+                res.status(200).json(docs.ops);
+            }
         })
     });
 
-/*  "/getunread/"
- *    GET: returns a list of all the unread notifications
- */
-
-router.route("/getunread")
-    .get(function(req, res) {
-        req.db.collection(notification_list)
-            .find( { read_status: "0" })
-            .toArray(function(err, docs) {
-                if (err) {
-                    handleError(res, err.message, "Failed to get notifications.");
-                } else {
-                    res.status(200).json(docs);
-                }
-        })
-    });
 
 /*  "/markAllRead/"
  *    PUT: marks all unread notification as read
@@ -120,21 +106,28 @@ router.route("/getunread")
 
 router.route("/markallread")
     .put(function(req, res) {
-        req.db.collection(notification_list)
-            .update(
-                { read_status: "0" },
-                { $set: { read_status: "1"} },
-                { multi: true },
-                function(err, docs) {
-                    if (err) {
-                        handleError(res, err.message, "Failed to get notifications.");
-                    } else {
-                        res.status(200).json(docs);
-                    }
-                })
+        controller.markAllRead(function(err, docs) {
+            if (err) {
+                handleError(res, err.message, "Failed to update all notifications");
+            } else {
+                res.status(204).end();
+            }
+        })
     });
 
-
+/*  "/deleteall/"
+ *    DELETE: clears all notifications
+ */
+router.route("/deleteall")
+    .delete(function(req, res) {
+        controller.deleteAllNotifications(function(err, result) {
+            if (err) {
+                handleError(res, err.message, "Failed to delete notification");
+            } else {
+                res.status(204).end();
+            }
+        })
+    });
 
 // Generic error handler used by all endpoints.
 function handleError(res, reason, message, code) {

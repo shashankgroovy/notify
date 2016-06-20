@@ -1,3 +1,5 @@
+// Various controller functions
+
 ARTISTS = [
     {
         "name": "Arctic Monkeys",
@@ -94,15 +96,82 @@ function createNewNotification() {
     return newNotification;
 }
 
+
+
+/**
+ * Fetch all notifications
+ */
+exports.getAllNotifications = function getAllNotifications(cb) {
+
+    db.collection(notification_collection)
+    .find({})
+    .toArray(function(err, docs) {
+        if (err) {
+            cb(err,docs);
+        } else {
+            cb(err,docs);
+        }
+    });
+}
+
 /**
  * A function that generates random number of new notifications within the
  * range 1 to 10
  */
-function generateNotifications() {
+exports.generateNotifications = function generateNotifications(cb) {
+
+    var notification_list = [];
+
     var maxlimit = 10;
     var random_count = getRandomInt(maxlimit, 1);
 
-    for (i=0; i<=maxlimit; i++) {
-        createNewNotification()
+    for (i=0; i<random_count; i++) {
+        newNotification = createNewNotification();
+        notification_list.push(newNotification);
     }
+
+    // set notifications in db
+    db.collection(notification_collection)
+        .insert(notification_list, function(err, docs) {
+            if (err) {
+                cb(err,docs);
+            } else {
+                cb(err,docs);
+            }
+        });
+}
+
+/**
+ * Deletes all notifications from the db collection but doesn't drop the collection
+ */
+exports.deleteAllNotifications = function deleteAllNotifications(cb) {
+
+    db.collection(notification_collection)
+        .deleteMany({}, function(err, result) {
+            if (err) {
+                cb(err, result);
+            } else {
+                cb(err, result);
+            }
+        })
+}
+
+/**
+ * Marks all unread notification as read
+ */
+exports.markAllRead = function markAllRead(cb) {
+
+    db.collection(notification_collection)
+        .update(
+            { read_status: "0" },
+            { $set: { read_status: "1"} },
+            { multi: true },
+            function(err, docs) {
+                if (err) {
+                    cb(err, docs);
+                } else {
+                    cb(err, docs);
+                }
+            }
+        )
 }
