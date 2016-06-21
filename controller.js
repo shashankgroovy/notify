@@ -105,6 +105,7 @@ exports.getAllNotifications = function getAllNotifications(cb) {
 
     db.collection(notification_collection)
     .find({})
+    .sort({createDate: -1})
     .toArray(function(err, docs) {
         if (err) {
             cb(err,docs);
@@ -148,8 +149,8 @@ exports.markAllRead = function markAllRead(cb) {
 
     db.collection(notification_collection)
         .update(
-            { read_status: "0" },
-            { $set: { read_status: "1"} },
+            { read_status: 0 },
+            { $set: { read_status: 1} },
             { multi: true },
             function(err, docs) {
                 if (err) {

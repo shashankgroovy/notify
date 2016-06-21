@@ -105,11 +105,10 @@ router.route("/createnotifications")
 router.route("/markallread")
     .put(function(req, res) {
         controller.markAllRead(function(err, docs) {
-            if (err) {
+            if (err)
                 handleError(res, err.message, "Failed to update all notifications");
-            } else {
-                res.status(204).end();
-            }
+            else
+                res.status(204).json(docs);
         })
     });
 

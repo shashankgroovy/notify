@@ -105,6 +105,11 @@ header.site-header {
     font-size: 13px;
     text-align: center;
     font-weight: bold;
+    -webkit-transition: transform .5s linear;
+    -moz-transition: transform .5s linear;
+    -o-transition: transform .5s linear;
+    transition: transform .5s linear;
+    transform: scale(0);
 }
 #noti-big-counter {
     height: 24px;
@@ -121,6 +126,7 @@ header.site-header {
     top: 64px;
     left: -128px;
     width: 280px;
+    display: none;
 }
 #noti-container header {
     background-color: #ffffff;
