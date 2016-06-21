@@ -184,6 +184,7 @@ header.site-header {
     display: table-cell;
     vertical-align: middle;
     padding: 20px;
+    width: 32px;
 }
 #noti-list ul li fig img {
     height: 32px;
@@ -195,6 +196,7 @@ header.site-header {
     vertical-align: middle;
     padding: 10px 10px 10px 0;
     font-size: 13px;
+    text-align: left;
 }
 #noti-list ul li .meta p span#user {
     font-weight: bold;

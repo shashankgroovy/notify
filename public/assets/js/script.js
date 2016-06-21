@@ -78,8 +78,8 @@ window.onload = function() {
             }
 
             // keep the db clean
-            // clear all notifications if total notifictions cross 50
-            if(notificationList.length > 50) {
+            // clear all notifications if total notifictions cross 100
+            if(notificationList.length > 100) {
                 deleteAll(function(result) {
                     // do nothing
                 });
