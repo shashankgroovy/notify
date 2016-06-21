@@ -121,7 +121,6 @@ header.site-header {
     top: 64px;
     left: -128px;
     width: 280px;
-    display: none;
 }
 #noti-container header {
     background-color: #ffffff;
@@ -152,6 +151,19 @@ header.site-header {
     overflow: scroll;
     overflow-x: hidden;
 }
+.noti-placeholder {
+    display: none;
+    border-top: 1px solid #c8dae4;
+    color: #929da8;
+    text-align: center;
+    height: 200px;
+    width: 100%;
+}
+.noti-placeholder p {
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 14px;
+}
 #noti-list ul { padding: 0; margin: 0; }
 #noti-list ul li {
     display: table;
@@ -172,13 +184,13 @@ header.site-header {
     width: 32px;
     border-radius: 32px;
 }
-#noti-list ul li .content {
+#noti-list ul li .meta {
     display: table-cell;
     vertical-align: middle;
     padding: 10px 10px 10px 0;
     font-size: 13px;
 }
-#noti-list ul li .content p span.username {
+#noti-list ul li .meta p span#user {
     font-weight: bold;
     color: #747f8b;
 }
@@ -194,4 +206,28 @@ header.site-header {
 .shadowbot {
     height: 335px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.175);
+}
+.tag {
+    height: 110px;
+    width: 360px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #9fb6c3;
+    padding: 30px;
+    margin: 20px;
+    border-radius: 8px;
+}
+.tag .tagbutton {
+    border: none;
+    outline: none;
+    padding: 10px;
+    background-color: #26b9b9;
+    border-radius: 40px;
+    width: 120px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+.tag .tagbutton:hover {
+    background-color: #9fb6c3;
+    color: white;
 }

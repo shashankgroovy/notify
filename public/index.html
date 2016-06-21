@@ -34,63 +34,36 @@
                 <div id="noti-box">
                     <a href="#" title="Notifications">
                         <i class="fa fa-bell-o" aria-hidden="true"></i>
-                        <span id="noti-counter">4</span>
+                        <span id="noti-counter">0</span>
                     </a>
                     <div id="noti-container" class="hidden opacity">
                         <div class="arrow-up"></div>
                         <header>
                             <div id="noti-label-holder">
                                 <div id="noti-container-label">Notifications</div>
-                                <div id="noti-big-counter">4</div>
+                                <div id="noti-big-counter">0</div>
                             </div>
                         </header>
                         <div id="noti-list">
+                            <div class="noti-placeholder">
+                                <p>Nothing to show here</p>
+                            </div>
                             <ul>
-                                <li>
-                                    <fig>
-                                        <img src="/assets/images/muse.jpg">
-                                    </fig>
-                                    <div class="content">
-                                        <p>
-                                            <span class="username">Muse</span>
-                                            <span class="action">posted a photo on your wall</span>
-                                        </p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <fig>
-                                        <img src="/assets/images/radiohead.png" alt="" />
-                                    </fig>
-                                    <div class="content">
-                                        <p>
-                                            <span class="username">Radiohead</span>
-                                            <span class="action">commented on your last video</span>
-                                        </p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <fig>
-                                        <img src="/assets/images/arcticmonkeys.jpg" alt="" />
-                                    </fig>
-                                    <div class="content">
-                                        <p>
-                                            <span class="username">Arctic Monkeys</span>
-                                            <span class="action">posted 2 comments on your post</span>
-                                        </p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <fig>
-                                        <img src="/assets/images/porcupinetree.jpg" alt="" />
-                                    </fig>
-                                    <div class="content">
-                                        <p>
-                                            <span class="username">Porcupine Tree</span>
-                                            <span class="action">liked your post</span>
-                                        </p>
-                                    </div>
-                                </li>
+                                <!-- existing data could optionally be included here -->
                             </ul>
+                            <template id="litemplate">
+                                <li>
+                                    <fig>
+                                        <img class="photo" src="">
+                                    </fig>
+                                    <div class="meta">
+                                        <p>
+                                            <span class="user"></span>
+                                            <span class="action"></span>
+                                        </p>
+                                    </div>
+                                </li>
+                            </template>
                         </div>
                     </div>
                 </div>
@@ -110,6 +83,12 @@
         </nav>
     </header>
     <article>
+        <div class="tag">
+            <p>Click on the button below to generate some notifications.</p>
+            <button id="go" class="tagbutton">
+                Generate
+            </button>
+        </div>
     </article>
 
     <script src="/assets/js/script.js"></script>

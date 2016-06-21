@@ -18,7 +18,6 @@ router.route("/notifications")
             }
         });
     })
-
     .post(function(req, res) {
         var newNotification = req.body;
         newNotification.createDate = new Date();
@@ -99,7 +98,6 @@ router.route("/createnotifications")
         })
     });
 
-
 /*  "/markAllRead/"
  *    PUT: marks all unread notification as read
  */
@@ -118,6 +116,7 @@ router.route("/markallread")
 /*  "/deleteall/"
  *    DELETE: clears all notifications
  */
+
 router.route("/deleteall")
     .delete(function(req, res) {
         controller.deleteAllNotifications(function(err, result) {
@@ -128,6 +127,7 @@ router.route("/deleteall")
             }
         })
     });
+
 
 // Generic error handler used by all endpoints.
 function handleError(res, reason, message, code) {

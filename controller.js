@@ -142,21 +142,6 @@ exports.generateNotifications = function generateNotifications(cb) {
 }
 
 /**
- * Deletes all notifications from the db collection but doesn't drop the collection
- */
-exports.deleteAllNotifications = function deleteAllNotifications(cb) {
-
-    db.collection(notification_collection)
-        .deleteMany({}, function(err, result) {
-            if (err) {
-                cb(err, result);
-            } else {
-                cb(err, result);
-            }
-        })
-}
-
-/**
  * Marks all unread notification as read
  */
 exports.markAllRead = function markAllRead(cb) {
@@ -174,4 +159,19 @@ exports.markAllRead = function markAllRead(cb) {
                 }
             }
         )
+}
+
+/**
+ * Deletes all notifications from the db collection but doesn't drop the collection
+ */
+exports.deleteAllNotifications = function deleteAllNotifications(cb) {
+
+    db.collection(notification_collection)
+        .deleteMany({}, function(err, result) {
+            if (err) {
+                cb(err, result);
+            } else {
+                cb(err, result);
+            }
+        })
 }
