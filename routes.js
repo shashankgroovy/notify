@@ -6,6 +6,8 @@ var router = express.Router();
 /*  "/notifications/"
  *    GET: show all notification
  *    POST: create new notification
+ *
+ *    TODO: rewrite the POST method to work via controller
  */
 
 router.route("/notifications")
@@ -19,6 +21,7 @@ router.route("/notifications")
         });
     })
     .post(function(req, res) {
+
         var newNotification = req.body;
         newNotification.createDate = new Date();
 
@@ -35,6 +38,7 @@ router.route("/notifications")
         });
     });
 
+
 /*  "/notifications/:id"
  *    GET: find notification by id
  *    PUT: update notification by id
@@ -44,7 +48,6 @@ router.route("/notifications")
  *    just one notification so maybe its a fair trade.
  *    Else retweak the controller functions to accept request objects parameters
  */
-
 router.route("/notifications/:id")
     .get(function(req, res) {
         db.collection(notification_collection)
@@ -81,12 +84,11 @@ router.route("/notifications/:id")
     });
 
 
-// Routes that don't follow the exact rest pattern but uses rest
+// Routes that don't follow the exact rest naming convention but uses rest
 
 /*  "/createnotifications/"
  *    GET: returns a random number of newly created notifications
  */
-
 router.route("/createnotifications")
     .get(function(req, res) {
         controller.generateNotifications(function(err, docs) {
@@ -98,10 +100,10 @@ router.route("/createnotifications")
         })
     });
 
+
 /*  "/getunread/"
  *    GET: returns a list of unread notifications
  */
-
 router.route("/getunread")
     .get(function(req, res) {
         controller.getUnread(function(err, docs) {
@@ -113,10 +115,10 @@ router.route("/getunread")
         })
     });
 
+
 /*  "/markAllRead/"
  *    PUT: marks all unread notification as read
  */
-
 router.route("/markallread")
     .put(function(req, res) {
         controller.markAllRead(function(err, docs) {
@@ -127,10 +129,10 @@ router.route("/markallread")
         })
     });
 
+
 /*  "/deleteall/"
  *    DELETE: clears all notifications
  */
-
 router.route("/deleteall")
     .delete(function(req, res) {
         controller.deleteAllNotifications(function(err, result) {

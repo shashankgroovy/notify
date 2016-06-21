@@ -157,8 +157,11 @@ exports.getUnread = function getUnread(cb) {
         }
     });
 }
+
 /**
  * Marks all unread notification as read
+ * read_status = 0 (unread)
+ * read_status = 1 (read)
  */
 exports.markAllRead = function markAllRead(cb) {
 
