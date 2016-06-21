@@ -1,55 +1,93 @@
 var notificationList = [];
-var notiCount = 0;
+var unreadCount = 0;
+var dropdownVisible = false;
 
+// frequently used DOM elements
 var noti_box = document.querySelector("#noti-box");
-//var noti-container = document.querySelector("noti-container");
-var noti_container = $("#noti-container");
 var noti_counter = document.querySelector('#noti-counter');
 var noti_big_counter = document.querySelector('#noti-big-counter');
 
 var button = document.querySelector('#go');
 
+//var noti-container = document.querySelector("noti-container");
+// NOTE: Need the jquery selector for fade in/out animation only
+var noti_container = $("#noti-container");
+
+
+// Begin all onclick operations when the DOM has loaded
 
 window.onload = function() {
-    noti_box.onclick = function() {
-        noti_container.fadeToggle("slow");
 
-        if(notiCount != 0 && notificationList.lenth != 0) {
+    /*
+     * Close dropdown on click event of document
+     */
+    document.onclick = function(event) {
+        if(dropdownVisible)
+            if(!noti_container.is(event.target) &&
+                noti_container.has(event.target).length == 0)
+            noti_container.fadeOut();
+    }
 
-            // only run the function when noti_counter is 0
-            // prevents multiple Http requests.
+    /*
+     * Open/close dropdown on click event of notification icon
+     * Marks all notifications in the dropdown as read.
+     */
+    noti_box.onclick = function(event) {
+        if(dropdownVisible) {
+            //hide dropdown
+            noti_container.fadeOut();
+            dropdownVisible = false;
+        } else {
+            //show dropdown
+            noti_container.fadeIn();
+            dropdownVisible = true;
 
-            markAllRead(function(result) {
+            if(unreadCount != 0 && notificationList.length != 0) {
 
-                // change the notification counters to 0 slowly so that the
-                // change is visible.
+                // only run the function when unreadCount is not zero
+                // prevents multiple Http requests.
 
-                setTimeout(function() {
-                    notiCount = 0;
-                    noti_counter.textContent = notiCount;
-                    noti_big_counter.textContent = notiCount;
-                    scaleNotiCounter();
-                }, 600)
-            });
+                markAllRead(function(result) {
 
+                    // change the notification counters to 0 slowly so that the
+                    // change is visible.
+
+                    setTimeout(function() {
+                        unreadCount = 0;
+                        noti_counter.textContent = unreadCount;
+                        noti_big_counter.textContent = unreadCount;
+                        scaleNotiCounter();
+                    }, 600)
+                });
+            }
         }
+        // prevent click event to propagte to respective parent DOM elements
+        event.stopPropagation();
     };
+
+    /*
+     * Generate random number of notifications at regular Intervals
+     */
     button.onclick = function() {
         fetchNotifications(function(result) {
-            // set values
+            // populate the array
             notificationList = result;
 
+            /*
+             * check if notification array is empty else
+             * generate the template for all the objects in the array
+             */
             if(notificationList.length != 0) {
 
                 notificationList.forEach(function(item) {
                     setTimeout(function() {
-                        notiCount += 1;
+                        unreadCount += 1;
                         // bring out the visual element
                         // scale the notification counter icon
                         scaleNotiCounter();
 
-                        noti_counter.textContent = notiCount;
-                        noti_big_counter.textContent = notiCount;
+                        noti_counter.textContent = unreadCount;
+                        noti_big_counter.textContent = unreadCount;
 
                         // generate the necessary template for all items
                         fillTemplate(item);
@@ -61,18 +99,31 @@ window.onload = function() {
 };
 
 
+/*
+ * Animate the notification counter badge
+ */
 function scaleNotiCounter() {
-    if (notiCount > 0) {
+    if (unreadCount > 0) {
         noti_counter.style.transform = "scale(1)";
     } else {
+        // remove the badge after 4 seconds
         setTimeout(function() {
             noti_counter.style.transform = "scale(0)";
-        }, 2000);
+        }, 4000);
     }
 }
+
+/*
+ * This is where the templating magic happens
+ * Uses the html5 <template> tag to create new elements and prepend to
+ * notificationList array
+ */
 function fillTemplate(item) {
 
+    // proceed only if templating is available
+
     if ('content' in document.createElement('template')) {
+
         image_base_url = '/assets/images/'
 
         // Instantiate the ul with the existing HTML
@@ -95,15 +146,18 @@ function fillTemplate(item) {
     } else {
         /**
          * Html5 templating works in all Modern browsers
-         * So glad templating works else I might have had to use a
+         * Phew! so glad templating works else I might have had to use a
          * templating engine
         */
     }
 }
+
+
 /**
  * Get all notifications and populate the notificationList array
  */
 function fetchNotifications(callback) {
+
     // Make an ajax call to fetch all notifications
     var req = new XMLHttpRequest();
     req.onreadystatechange = function()
@@ -111,13 +165,20 @@ function fetchNotifications(callback) {
         if (req.readyState == 4 && req.status == 200)
         {
             // return the response object via the callback
-            // JSON.parse is essential to convert string type response to proper json.
-            // since responseText is a string and we need JSON.
-            callback(JSON.parse(req.responseText)); // Another callback here
+            // JSON.parse is essential to convert string type response to
+            // proper json. Since responseText is a string and we need JSON.
+            callback(JSON.parse(req.responseText));
         }
     };
-    req.open('GET', "api/v1/notifications");
-    req.send();
+
+    // create new notifications or bring out the old ones
+    if (unreadCount == 0 && notificationList.length > 0) {
+        req.open('GET', "api/v1/createnotifications");
+        req.send();
+    } else {
+        req.open('GET', "api/v1/notifications");
+        req.send();
+    }
 }
 
 /**
@@ -133,7 +194,6 @@ function markAllRead(callback) {
         if (req.readyState == 4 && req.status == 204)
         {
             // return the response object via the callback
-            console.log(req.responseText)
             callback(req.responseText);
         }
     };
