@@ -1,5 +1,6 @@
 # notify
-  A dribbble inspired notification menu with a RESTful API server in node.js
+  A [dribbble inspired](https://dribbble.com/shots/1463784-Notifications-Dropdown) notification menu with a RESTful API server in node.js
+  See the [demo here](https://agile-springs-96399.herokuapp.com/)
 
 ### Setup
 
