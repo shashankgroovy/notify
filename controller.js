@@ -143,6 +143,21 @@ exports.generateNotifications = function generateNotifications(cb) {
 }
 
 /**
+ * get unread notifications
+ */
+exports.getUnread = function getUnread(cb) {
+
+    db.collection(notification_collection)
+    .find({read_status : 0})
+    .toArray(function(err, docs) {
+        if (err) {
+            cb(err,docs);
+        } else {
+            cb(err,docs);
+        }
+    });
+}
+/**
  * Marks all unread notification as read
  */
 exports.markAllRead = function markAllRead(cb) {

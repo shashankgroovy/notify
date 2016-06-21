@@ -98,6 +98,21 @@ router.route("/createnotifications")
         })
     });
 
+/*  "/getunread/"
+ *    GET: returns a list of unread notifications
+ */
+
+router.route("/getunread")
+    .get(function(req, res) {
+        controller.getUnread(function(err, docs) {
+            if (err) {
+                handleError(res, err.message, "Failed to create notifications.");
+            } else {
+                res.status(200).json(docs);
+            }
+        })
+    });
+
 /*  "/markAllRead/"
  *    PUT: marks all unread notification as read
  */

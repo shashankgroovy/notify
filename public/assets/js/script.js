@@ -18,6 +18,22 @@ var noti_container = $("#noti-container");
 
 window.onload = function() {
 
+    // pre-populate the read notifications
+    fetchNotifications(type="old", function(result) {
+        notificationList = result;
+        notificationList.forEach(function(item) {
+            setTimeout(function() {
+                // generate the necessary template for all items
+                if(item.read_status == 0) {
+                    unreadCount += 1;
+                    noti_counter.textContent = unreadCount;
+                    noti_big_counter.textContent = unreadCount;
+                    scaleNotiCounter();
+                }
+                fillTemplate(item);
+            }, 1000)
+        })
+    });
     /*
      * Close dropdown on click event of document
      */
@@ -60,6 +76,14 @@ window.onload = function() {
                     }, 600)
                 });
             }
+
+            // keep the db clean
+            // clear all notifications if total notifictions cross 50
+            if(notificationList.length > 50) {
+                deleteAll(function(result) {
+                    // do nothing
+                });
+            }
         }
         // prevent click event to propagte to respective parent DOM elements
         event.stopPropagation();
@@ -69,7 +93,7 @@ window.onload = function() {
      * Generate random number of notifications at regular Intervals
      */
     button.onclick = function() {
-        fetchNotifications(function(result) {
+        fetchNotifications(type="new", function(result) {
             // populate the array
             notificationList = result;
 
@@ -109,7 +133,7 @@ function scaleNotiCounter() {
         // remove the badge after 4 seconds
         setTimeout(function() {
             noti_counter.style.transform = "scale(0)";
-        }, 4000);
+        }, 6000);
     }
 }
 
@@ -155,8 +179,10 @@ function fillTemplate(item) {
 
 /**
  * Get all notifications and populate the notificationList array
+ * if no notifications exist then tries to fetch notifications
+ * else creates new ones.
  */
-function fetchNotifications(callback) {
+function fetchNotifications(type="new", callback) {
 
     // Make an ajax call to fetch all notifications
     var req = new XMLHttpRequest();
@@ -172,10 +198,10 @@ function fetchNotifications(callback) {
     };
 
     // create new notifications or bring out the old ones
-    if (unreadCount == 0 && notificationList.length > 0) {
+    if (type == "new") {
         req.open('GET', "api/v1/createnotifications");
         req.send();
-    } else {
+    } else if (type == "old") {
         req.open('GET', "api/v1/notifications");
         req.send();
     }
@@ -198,5 +224,24 @@ function markAllRead(callback) {
         }
     };
     req.open('PUT', "api/v1/markallread");
+    req.send();
+}
+
+/**
+ * Deletes all notifications
+ */
+function deleteAll(callback) {
+
+    // set the ajax request object
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function()
+    {
+        if (req.readyState == 4 && req.status == 204)
+        {
+            // return the response object via the callback
+            callback(req.responseText);
+        }
+    };
+    req.open('DELETE', "api/v1/deleteall");
     req.send();
 }
