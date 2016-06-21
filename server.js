@@ -19,7 +19,8 @@ app.use(bodyParser.json());
  *
  */
 
-MONGODB_URI = 'mongodb://localhost:27017/test';
+//MONGODB_URI = 'mongodb://localhost:27017/test';
+MONGODB_URI = 'mongodb://notify:test@ds021034.mlab.com:21034/notify';
 
 // Create a database variable and collection name
 db = null;
